@@ -24,31 +24,39 @@ export const TodoItem = (props: Props) => {
   } = props;
 
   return (
-    <li>
+    <li className="flex justify-between items-center p-2 border capitalize hover:bg-slate-100">
       <Link
         href={`${id}`}
         className={cn(
-          "flex justify-between p-2 border capitalize hover:bg-slate-100 cursor-pointer group",
+          "flex-1 cursor-pointer border-b border-transparent hover:border-b-black",
           { "line-through": completed },
         )}
       >
         {title}
-
-        <div className="flex gap-2 opacity-0 group-hover:opacity-100">
-          <Check
-            className="cursor-pointer hover:text-green-500"
-            onClick={() => onToggle(id)}
-          />
-          <Edit
-            className="cursor-pointer hover:text-blue-500"
-            onClick={() => onEdit(id)}
-          />
-          <Trash
-            className="cursor-pointer hover:text-red-500"
-            onClick={() => onDelete(id)}
-          />
-        </div>
       </Link>
+      <div className="flex gap-2">
+        <Check
+          className="cursor-pointer hover:text-green-500"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggle(id);
+          }}
+        />
+        <Edit
+          className="cursor-pointer hover:text-blue-500"
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(id);
+          }}
+        />
+        <Trash
+          className="cursor-pointer hover:text-red-500"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(id);
+          }}
+        />
+      </div>
     </li>
   );
 };

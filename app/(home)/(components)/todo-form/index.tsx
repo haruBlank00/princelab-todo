@@ -8,12 +8,12 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 type Props = {
   todo?: Todo;
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-  onFinishEdit: () => void;
+  onUpdate: (todo: Todo) => void;
+  onAdd: (todo: Todo) => void;
 };
 
 export const TodoForm = (props: Props) => {
-  const { setTodos, todo, onFinishEdit } = props;
+  const { todo, onUpdate, onAdd } = props;
 
   const [form, setForm] = useState({
     value: todo?.title || "",
@@ -55,10 +55,7 @@ export const TodoForm = (props: Props) => {
         title: form.value,
         updated: new Date(),
       };
-      setTodos((prev) =>
-        prev.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo)),
-      );
-      onFinishEdit();
+      onUpdate(updatedTodo);
     } else {
       const newTodo: Todo = {
         id: nanoid(),
@@ -67,7 +64,7 @@ export const TodoForm = (props: Props) => {
         created: new Date(),
         updated: new Date(),
       };
-      setTodos((prev) => [...prev, newTodo]);
+      onAdd(newTodo);
     }
 
     setForm({
